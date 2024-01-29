@@ -1,5 +1,6 @@
 from transformers import PegasusTokenizer, PegasusForConditionalGeneration, TFPegasusForConditionalGeneration
 import json
+import time
 
 # Let's load the model and the tokenizer
 model_name = "human-centered-summarization/financial-summarization-pegasus"
@@ -14,7 +15,8 @@ samples = json.load(file)
 
 for text_to_summarize in samples["samples"]:
     # Tokenize our text
-    # If you want to run the code in Tensorflow, please remember to return the particular tensors as simply as using return_tensors = 'tf'
+    # If yotimeu want to run the code in Tensorflow, please remember to return the particular tensors as simply as using return_tensors = 'tf'
+    start_time = time.process_time()
     input_ids = tokenizer(text_to_summarize, return_tensors="pt").input_ids
 
     # Generate the output (Here, we use beam search but you can also use any other strategy you like)
@@ -26,5 +28,5 @@ for text_to_summarize in samples["samples"]:
     )
 
     print(tokenizer.decode(output[0], skip_special_tokens=True))
-
+    print("Time elapsed: {0} ms".format(time.process_time() - start_time))
 file.close()
