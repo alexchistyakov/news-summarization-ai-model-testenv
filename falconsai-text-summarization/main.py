@@ -4,7 +4,7 @@ import time
 import nvidia_smi
 
 
-summarizer = pipeline("summarization", model="Falconsai/text_summarization")
+summarizer = pipeline("summarization", model="Falconsai/text_summarization", device=0)
 file = open("../samples.json")
 samples = json.load(file)
 
@@ -13,7 +13,7 @@ for article in samples["samples"]:
     start = time.process_time()
 
     #Run Model on sample
-    print(summarizer(article, max_length=130, min_length=30, do_sample=False))
+    print(summarizer(article, max_length=220, min_length=60, do_sample=False))
 
     #Print time elapsed
     end = time.process_time()
